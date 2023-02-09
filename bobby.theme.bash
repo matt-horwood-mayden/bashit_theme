@@ -13,12 +13,12 @@ GIT_THEME_PROMPT_SUFFIX="${green}|"
 RVM_THEME_PROMPT_PREFIX="|"
 RVM_THEME_PROMPT_SUFFIX="|"
 
-__bobby_clock() {
-  printf "$(clock_prompt) "
+function __bobby_clock() {
+	printf '%s' "$(clock_prompt) "
 
-  if [ "${THEME_SHOW_CLOCK_CHAR}" == "true" ]; then
-    printf "$(clock_char) "
-  fi
+	if [[ "${THEME_SHOW_CLOCK_CHAR:-}" == "true" ]]; then
+		printf '%s' "$(clock_char) "
+	fi
 }
 
 __horwood_ruby(){
@@ -31,8 +31,10 @@ __horwood_ruby(){
 }
 
 function prompt_command() {
-    #PS1="${bold_cyan}$(scm_char)${green}$(scm_prompt_info)${purple}$(ruby_version_prompt) ${yellow}\h ${reset_color}in ${green}\w ${reset_color}\n${green}→${reset_color} "
-    PS1="\n$(battery_char) $(__bobby_clock)${yellow}$(__horwood_ruby)$(python_version_prompt) ${purple}\h ${reset_color}in ${green}\w\n${bold_cyan}$(scm_prompt_char_info) ${green}→${reset_color} "
+  PS1="\n$(battery_char) "
+  PS1+="$(__bobby_clock)${yellow}$(__horwood_ruby)$(python_version_prompt) "
+  PS1+="${purple}\h ${reset_color}in ${green}\w"
+  PS1+="\n${bold_cyan}$(scm_prompt_char_info) ${green}→${reset_color} "
 }
 
 THEME_SHOW_CLOCK_CHAR=${THEME_SHOW_CLOCK_CHAR:-"true"}
